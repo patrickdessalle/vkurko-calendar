@@ -126,6 +126,23 @@ export default [
 		],
 	},
 	{
+		input: 'packages/resource-time-line/src/index.js',
+		output: {
+			format: 'es',
+			file: 'packages/resource-time-line/index.js'
+		},
+		external: ['@event-calendar/core', 'svelte', 'svelte/internal', 'svelte/store'],
+		plugins: [
+			svelte({
+				compilerOptions: {
+					dev: !production,
+					discloseVersion: false,
+					css: false
+				}
+			})
+		],
+	},
+	{
 		input: 'packages/build/src/index.js',
 		output: {
 			format: 'iife',

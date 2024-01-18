@@ -4,7 +4,7 @@ See [demo](https://vkurko.github.io/calendar/) and [changelog](CHANGELOG.md).
 
 Full-sized drag & drop JavaScript event calendar with resource view:
 
-* Lightweight (32kb [br](https://en.wikipedia.org/wiki/Brotli) compressed)
+* Lightweight (31kb [br](https://en.wikipedia.org/wiki/Brotli) compressed)
 * Zero-dependency (pre-built bundle)
 * Used on over 70,000 websites with [Bookly](https://wordpress.org/plugins/bookly-responsive-appointment-booking-tool/)
 
@@ -27,7 +27,6 @@ Inspired by [FullCalendar](https://fullcalendar.io/), implements similar options
   - [datesAboveResources](#datesaboveresources)
   - [datesSet](#datesset)
   - [dayCellFormat](#daycellformat)
-  - [dayHeaderAriaLabelFormat](#dayheaderarialabelformat)
   - [dayHeaderFormat](#dayheaderformat)
   - [dayMaxEvents](#daymaxevents)
   - [dayPopoverFormat](#daypopoverformat)
@@ -36,7 +35,6 @@ Inspired by [FullCalendar](https://fullcalendar.io/), implements similar options
   - [duration](#duration)
   - [editable](#editable)
   - [events](#events)
-  - [eventAllUpdated](#eventallupdated)
   - [eventBackgroundColor](#eventbackgroundcolor)
   - [eventClassNames](#eventclassnames)
   - [eventClick](#eventclick)
@@ -46,9 +44,9 @@ Inspired by [FullCalendar](https://fullcalendar.io/), implements similar options
   - [eventDragMinDistance](#eventdragmindistance)
   - [eventDragStart](#eventdragstart)
   - [eventDragStop](#eventdragstop)
+  - [eventDrop](#eventdrop)
   </td><td>
 
-  - [eventDrop](#eventdrop)
   - [eventDurationEditable](#eventdurationeditable)
   - [eventLongPressDelay](#eventlongpressdelay)
   - [eventMouseEnter](#eventmouseenter)
@@ -135,7 +133,6 @@ Inspired by [FullCalendar](https://fullcalendar.io/), implements similar options
 - [Resource object](#resource-object)
   - [Parsing resource from a plain object](#parsing-resource-from-a-plain-object)
 - [View object](#view-object)
-- [Theming](#theming)
 - [Browser support](#browser-support)
 
 ## Usage
@@ -153,7 +150,6 @@ You must use at least one plugin that provides a view. The following plugins are
 * `@event-calendar/day-grid`
 * `@event-calendar/list`
 * `@event-calendar/resource-time-grid`
-* `@event-calendar/resource-time-line`
 * `@event-calendar/time-grid`
 * `@event-calendar/interaction` (doesn't provide a view)
 
@@ -200,8 +196,8 @@ import '@event-calendar/core/index.css';
 ### Pre-built browser ready bundle
 Include the following lines of code in the `<head>` section of your page:
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@event-calendar/build@2.6.0/event-calendar.min.css">
-<script src="https://cdn.jsdelivr.net/npm/@event-calendar/build@2.6.0/event-calendar.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@event-calendar/build@2.3.2/event-calendar.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@event-calendar/build@2.3.2/event-calendar.min.js"></script>
 ```
 
 <details>
@@ -481,31 +477,6 @@ function (date) {
 </tr>
 </table>
 
-### dayHeaderAriaLabelFormat
-- Type `object` or `function`
-- Default `{dateStyle: 'long'}`
-> Views override the default value as follows:
-> - dayGridMonth `{weekday: 'long'}`
-
-Defines the text that is used inside the `aria-label` attribute in calendar column headings.
-
-This value can be either an object with options for the native JavaScript [Intl.DateTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat) object, or a callback function that returns formatted string:
-
-```js
-function (date) {
-    // return formatted date string
-}
-```
-<table>
-<tr>
-<td>
-
-`date`
-</td>
-<td>JavaScript Date object that needs to be formatted</td>
-</tr>
-</table>
-
 ### dayHeaderFormat
 - Type `object` or `function`
 - Default `{weekday: 'short', month: 'numeric', day: 'numeric'}`
@@ -604,31 +575,6 @@ If you don't need both, use the more specific [eventStartEditable](#eventstarted
 Array of plain objects that will be parsed into [Event](#event-object) objects and displayed on the calendar.
 
 This option is not used if the `eventSources` option is provided.
-
-### eventAllUpdated
-- Type `function`
-- Default `undefined`
-
-Callback function that is triggered when all events have finished updating.
-
-This is an experimental feature and its behavior may change in the future. The function is called at the end of the cycle of rendering all events. The rendering occurs when new events are added, already displayed events are modified, or events are deleted.
-
-```js
-function (info) { }
-```
-`info` is an object with the following properties:
-<table>
-<tr>
-<td>
-
-`view`
-</td>
-<td>
-
-The current [View](#view-object) object
-</td>
-</tr>
-</table>
 
 ### eventBackgroundColor
 - Type `string`
@@ -2275,6 +2221,13 @@ If the current view is a resource view, the [Resource](#resource-object) object 
 
 Using this method, you can, for example, find out on which day a click occurred inside a multi-day event. To do this, inside [eventClick](#eventclick), pass the `jsEvent.clientX` and `jsEvent.clientY` coordinates to `dateFromPoint` and get the desired date.
 
+<details>
+  <summary>Note</summary>
+
+> In the `'listDay'`, `'listWeek'`, `'listMonth'` and `'listYear'` views, the events are rendered outside the day container, so the method will return `null` for the coordinates that are inside the events.
+
+</details>
+
 ### destroy()
 - Return value `undefined`
 
@@ -2291,7 +2244,7 @@ Returns the [View](#view-object) object for the current view.
 Clears the current selection. See [selectable](#selectable).
 
 ## Content
-The content value can be presented in the following forms:
+The content can be presented in the following forms:
 
 * a string containing text `'some text'`
 * an object containing the HTML string `{html: '<p>some HTML</p>'}`
@@ -2346,7 +2299,7 @@ Here are all properties that exist in Event object:
 </td>
 <td>
 
-`Content` The text appearing on the event. See [Content](#content)</td>
+The text appearing on the event. See [Content](#content)</td>
 </tr>
 <tr>
 <td>
@@ -2636,10 +2589,14 @@ Here are all properties that exist in Resource object:
 
 `title`
 </td>
+<td>The title of the resource</td>
+</tr>
+<tr>
 <td>
 
-The title of the resource. See [Content](#content).
+`titleHTML`
 </td>
+<td>The HTML version of the title</td>
 </tr>
 <tr>
 <td>
@@ -2679,7 +2636,17 @@ Here are all admissible fields for the resource’s input object:
 </td>
 <td>
 
-`Content` Text that will be displayed on the resource when it is rendered. See [Content](#content). Default `''`
+`string` Text that will be displayed on the resource when it is rendered. Default `''`
+</td>
+</tr>
+<tr>
+<td>
+
+`titleHTML`
+</td>
+<td>
+
+`string` The HTML version of the title to be displayed instead of the text version. Default `''`
 </td>
 </tr>
 <tr>
@@ -2752,23 +2719,6 @@ Here are all properties that exist in View object:
 <td>JavaScript Date that is the last visible day. Note: This value is exclusive</td>
 </tr>
 </table>
-
-## Theming
-
-The library provides a built-in dark theme. You can activate it by adding the `ec-dark` CSS class to any parent element of the calendar, e.g. `<body class="ec-dark">`.
-
-If you want the dark theme to be activated automatically based on the [preferred color scheme](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme), then use the `ec-auto-dark` CSS class instead.
-
-Please note that the dark theme does not change the background and font color in the calendar. These are assumed to be set by the page styles, and the calendar inherits these styles.
-
-If you do need to set the background or font color of the calendar, use local CSS variables for this:
-```css
-.ec {
-  --ec-bg-color: #22272e;
-  --ec-text-color: #adbac7;
-}
-```
-A list of all available CSS variables can be found [here](packages/core/src/styles/theme.scss).
 
 ## Browser support
 

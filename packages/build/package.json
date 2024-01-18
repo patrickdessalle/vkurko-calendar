@@ -22,6 +22,7 @@
     "@event-calendar/interaction": "~2.6.0",
     "@event-calendar/list": "~2.6.0",
     "@event-calendar/time-grid": "~2.6.0",
-    "@event-calendar/resource-time-grid": "~2.6.0"
+    "@event-calendar/resource-time-grid": "~2.6.0",
+    "@event-calendar/resource-time-line": "~2.6.0"
   }
 }

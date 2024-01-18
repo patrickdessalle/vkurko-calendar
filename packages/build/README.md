@@ -153,6 +153,7 @@ You must use at least one plugin that provides a view. The following plugins are
 * `@event-calendar/day-grid`
 * `@event-calendar/list`
 * `@event-calendar/resource-time-grid`
+* `@event-calendar/resource-time-line`
 * `@event-calendar/time-grid`
 * `@event-calendar/interaction` (doesn't provide a view)
 

@@ -19,6 +19,7 @@
     "@event-calendar/interaction": "~2.6.0",
     "@event-calendar/list": "~2.6.0",
     "@event-calendar/resource-time-grid": "~2.6.0",
+    "@event-calendar/resource-time-line": "file:packages/resource-time-line",
     "@event-calendar/time-grid": "~2.6.0",
     "@rollup/plugin-babel": "^6.0.4",
     "@rollup/plugin-commonjs": "^25.0.7",
