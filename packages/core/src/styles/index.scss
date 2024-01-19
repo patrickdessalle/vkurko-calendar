@@ -594,6 +594,10 @@
   }
 }
 
+.ec-time-line .ec-content {
+  border-bottom: 1px solid var(--ec-border-color);
+}
+
 .ec-dragging {
   cursor: pointer!important;
 }

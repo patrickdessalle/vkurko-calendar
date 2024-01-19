@@ -1,7 +1,10 @@
 <script>
     import {getContext} from 'svelte';
     import {setContent} from '@event-calendar/core';
-    import {Section, Body, Day, Week} from '@event-calendar/time-grid';
+    import {Week} from '@event-calendar/time-grid';
+    import Section from './Section.svelte';
+    import Body from './Body.svelte';
+    import Day from './Day.svelte';
     import Label from './Label.svelte';
 
     let {_viewDates, _viewResources, _intlDayHeader, theme} = getContext('state');
@@ -24,7 +27,7 @@
 </div>
 <Body>
 {#each loops[0] as item0}
-    <div class="{$theme.resource}">
+    <div class="{$theme.lines}">
         {#each loops[1] as item1}
             <Day
                 date={item0}
